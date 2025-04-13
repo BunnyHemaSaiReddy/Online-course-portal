@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>ML Course Enrollment</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      height: 100vh;
+      display: flex;
+      background: #f0f4f8;
+    }
+
+    .left, .right {
+      flex: 1;
+      padding: 40px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .left {
+      background: linear-gradient(to bottom right, #3a8dde, #6ec6ff);
+      color: white;
+      justify-content: flex-start;
+      align-items: flex-start;
+    }
+
+    .left p {
+      font-size: 1.1rem;
+      max-width: 500px;
+    }
+
+    .right {
+      background: white;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      border-left: 2px solid #ddd;
+    }
+
+    .right h2 {
+      font-size: 2rem;
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    button {
+      padding: 15px 25px;
+      font-size: 1rem;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background 0.3s;
+      font-weight: 600;
+      margin: 10px;
+    }
+
+    .lang-btn {
+      background-color: #ffc107;
+      color: black;
+    }
+
+    .lang-btn:hover {
+      background-color: #e0a800;
+    }
+
+    .enroll-btn {
+      background-color: #28a745;
+      color: white;
+    }
+
+    .enroll-btn:hover {
+      background-color: #218838;
+    }
+
+    select {
+      padding: 10px;
+      font-size: 1rem;
+      border-radius: 8px;
+      margin-top: 10px;
+      display: none;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="left">
+    <h1 id="course-title">Machine Learning Course</h1>
+    <p id="desc">
+      This course covers everything from basic algorithms to advanced machine learning techniques using Python. Perfect for beginners and professionals looking to enhance their skills.
+    </p>
+  </div>
+
+  <div class="right">
+    <h2>Hello {{ username }}, enroll in this course</h2>
+    <button class="lang-btn" onclick="showLanguages()">Change Language</button>
+    <select id="langSelect" onchange="changeLanguage()">
+      <option value="">Select Language</option>
+      <option value="english" {% if default_lang == 'english' %}selected{% endif %}>English</option>
+      <option value="hindi" {% if default_lang == 'hindi' %}selected{% endif %}>Hindi</option>
+      <option value="telugu" {% if default_lang == 'telugu' %}selected{% endif %}>Telugu</option>
+    </select>
+    <br>
+    <button class="enroll-btn" onclick="goToEnroll()">Enroll Now</button>
+  </div>
+
+  <script>
+    function showLanguages() {
+      document.getElementById('langSelect').style.display = 'block';
+    }
+  
+    function changeLanguage() {
+      const lang = document.getElementById('langSelect').value;
+      const title = document.getElementById('course-title');
+      const desc = document.getElementById('desc');
+  
+      if (lang === 'english') {
+        title.textContent = "Machine Learning Course";
+        desc.textContent = "This course covers everything from basic algorithms to advanced machine learning techniques using Python. Perfect for beginners and professionals looking to enhance their skills.";
+      } else if (lang === 'hindi') {
+        title.textContent = "मशीन लर्निंग कोर्स";
+        desc.textContent = "यह कोर्स बेसिक एल्गोरिदम से लेकर एडवांस मशीन लर्निंग तकनीकों तक सब कुछ कवर करता है। यह शुरुआती और पेशेवरों दोनों के लिए उपयुक्त है।";
+      } else if (lang === 'telugu') {
+        title.textContent = "మెషిన్ లెర్నింగ్ కోర్సు";
+        desc.textContent = "ఈ కోర్సు బేసిక్ అల్గోరిథమ్స్ నుండి అడ్వాన్స్‌డ్ మెషిన్ లర్నింగ్ టెక్నిక్స్ వరకు అన్నింటినీ కవర్ చేస్తుంది. ప్రారంభ మరియు నిపుణులకు అనుకూలంగా ఉంటుంది.";
+      }
+    }
+  
+    function goToEnroll() {
+      const lang = document.getElementById('langSelect').value || 'english';
+      window.location.href = `/enroll?lang=${lang}`;
+    }
+  
+    window.onload = function () {
+      document.getElementById('langSelect').style.display = 'block';
+    }
+
+    if (window.performance && performance.navigation.type === performance.navigation.TYPE_NAVIGATE) {
+    history.pushState(null, null, location.href);
+    window.onpopstate = function () {
+      location.href = "enroll_page.html";
+    };
+  }
+  </script>
+
+</body>
+</html>
+
+
+
+
+
+
+
