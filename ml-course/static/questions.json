@@ -1,0 +1,27 @@
+[
+  {
+    "question": "Which of the following is a type of Machine Learning?",
+    "options": ["Supervised Learning", "Unsupervised Learning", "Reinforcement Learning", "All of the above"],
+    "answer": "All of the above"
+  },
+  {
+    "question": "What is the purpose of feature scaling?",
+    "options": ["To clean data", "To transform features to a similar scale", "To remove features", "To merge datasets"],
+    "answer": "To transform features to a similar scale"
+  },
+  {
+    "question": "Which algorithm is used for classification problems?",
+    "options": ["Linear Regression", "Logistic Regression", "K-Means", "PCA"],
+    "answer": "Logistic Regression"
+  },
+  {
+    "question": "What does a confusion matrix help to evaluate?",
+    "options": ["Model speed", "Model structure", "Model performance", "Model tuning"],
+    "answer": "Model performance"
+  },
+  {
+    "question": "Which of these is an ensemble method?",
+    "options": ["Decision Tree", "KNN", "Random Forest", "SVM"],
+    "answer": "Random Forest"
+  }
+]

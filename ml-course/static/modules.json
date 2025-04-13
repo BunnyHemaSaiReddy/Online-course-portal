@@ -1,0 +1,87 @@
+[
+  {
+    "name": "Introduction to ML",
+    "topics": [
+      {
+        "title": "What is Machine Learning?",
+        "video_url": "https://www.youtube.com/embed/GwIo3gDZCVQ",
+        "description": "An introduction to the basics of Machine Learning and how it differs from traditional programming."
+      },
+      {
+        "title": "Types of Machine Learning",
+        "video_url": "https://www.youtube.com/embed/olFxW7kdtP8",
+        "description": "Learn about Supervised, Unsupervised, and Reinforcement Learning."
+      }
+    ]
+  },
+  {
+    "name": "Data Preprocessing",
+    "topics": [
+      {
+        "title": "Handling Missing Data",
+        "video_url": "https://www.youtube.com/embed/v0HItX1xhNg",
+        "description": "Techniques to handle missing values in datasets."
+      },
+      {
+        "title": "Feature Scaling",
+        "video_url": "https://www.youtube.com/embed/mnKm3YP56PY",
+        "description": "Understand normalization and standardization."
+      },
+      {
+        "title": "Feature Scaling - Machine Learning Tutorial #5.18",
+        "video_url": "https://www.youtube.com/embed/85je4aCdYcE",
+        "description": "This tutorial explains the importance of feature scaling in machine learning."
+      },
+      {
+        "title": "Feature Scaling Techniques In Machine Learning",
+        "video_url": "https://www.youtube.com/embed/T50vaw_8imo",
+        "description": "A comprehensive guide on various feature scaling techniques used in machine learning."
+      }
+    ]
+  },
+  {
+    "name": "Model Building",
+    "topics": [
+      {
+        "title": "Linear Regression",
+        "video_url": "https://www.youtube.com/embed/7ArmBVF2dCs",
+        "description": "Basics of Linear Regression and its implementation."
+      },
+      {
+        "title": "Logistic Regression",
+        "video_url": "https://www.youtube.com/embed/yIYKR4sgzI8",
+        "description": "Understand Logistic Regression and binary classification."
+      }
+    ]
+  },
+  {
+    "name": "Model Evaluation",
+    "topics": [
+      {
+        "title": "Confusion Matrix",
+        "video_url": "https://www.youtube.com/embed/Kdsp6soqA7o",
+        "description": "How to evaluate models using a confusion matrix."
+      },
+      {
+        "title": "Cross Validation",
+        "video_url": "https://www.youtube.com/embed/6dbrR-WymjI",
+        "description": "How to use cross validation to validate your model."
+      }
+    ]
+  },
+  {
+    "name": "Advanced Topics",
+    "topics": [
+      {
+        "title": "Neural Networks",
+        "video_url": "https://www.youtube.com/embed/aircAruvnKk",
+        "description": "Introduction to neural networks and deep learning."
+      },
+      {
+        "title": "Ensemble Learning",
+        "video_url": "https://www.youtube.com/embed/tH9FH1DH5n0",
+        "description": "Learn about Random Forest, Boosting, and Bagging."
+      }
+    ]
+  }
+]

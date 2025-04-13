@@ -1,0 +1,77 @@
+[
+  {
+    "name": "Introduction to ML",
+    "topics": [
+      {
+        "title": "What is Machine Learning?",
+        "video_url": "https://www.youtube.com/embed/cE-Ej1ycXtk",
+        "description": "An introduction to the basics of Machine Learning and how it differs from traditional programming."
+      },
+      {
+        "title": "Types of Machine Learning",
+        "video_url": "https://www.youtube.com/embed/97HCQqvhK0Y",
+        "description": "Learn about Supervised, Unsupervised, and Reinforcement Learning."
+      }
+    ]
+  },
+  {
+    "name": "Data Preprocessing",
+    "topics": [
+      {
+        "title": "Handling Missing Data",
+        "video_url": "https://www.youtube.com/embed/KfC7VfDfn8I",
+        "description": "Techniques to handle missing values in datasets."
+      },
+      {
+        "title": "Feature Scaling",
+        "video_url": "https://www.youtube.com/embed/85je4aCdYcE",
+        "description": "Understand normalization and standardization."
+      }
+    ]
+  },
+  {
+    "name": "Model Building",
+    "topics": [
+      {
+        "title": "Linear Regression",
+        "video_url": "https://www.youtube.com/embed/zUQr6HAAKp4",
+        "description": "Basics of Linear Regression and its implementation."
+      },
+      {
+        "title": "Logistic Regression",
+        "video_url": "https://www.youtube.com/embed/r8OjlgWpAI0",
+        "description": "Understand Logistic Regression and binary classification."
+      }
+    ]
+  },
+  {
+    "name": "Model Evaluation",
+    "topics": [
+      {
+        "title": "Confusion Matrix",
+        "video_url": "https://www.youtube.com/embed/AyP85ocS-8Y",
+        "description": "How to evaluate models using a confusion matrix."
+      },
+      {
+        "title": "Cross Validation",
+        "video_url": "https://www.youtube.com/embed/v6DtYYafrWQ",
+        "description": "How to use cross validation to validate your model."
+      }
+    ]
+  },
+  {
+    "name": "Advanced Topics",
+    "topics": [
+      {
+        "title": "Neural Networks",
+        "video_url": "https://www.youtube.com/embed/EYeF2e2IKEo",
+        "description": "Introduction to neural networks and deep learning."
+      },
+      {
+        "title": "Ensemble Learning",
+        "video_url": "https://www.youtube.com/embed/qQjOWmf8I_I",
+        "description": "Learn about Random Forest, Boosting, and Bagging."
+      }
+    ]
+  }
+]
