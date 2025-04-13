@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Email Navigation</title>
+</head>
+<body>
+
+  <h2>Enter your email:</h2>
+  <input type="email" id="emailInput" placeholder="example@example.com" required>
+  <br><br>
+
+  <a id="goButton" href="#" onclick="navigate()">Go to Email Page</a>
+
+  <script>
+    function navigate() {
+      const email = document.getElementById("emailInput").value;
+      if (email) {
+        window.location.href = `http://127.0.0.1:5000/email?email=${encodeURIComponent(email)}`;
+      } else {
+        alert("Please enter a valid email address.");
+      }
+    }
+  </script>
+
+</body>
+</html>
