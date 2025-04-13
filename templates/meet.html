@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scheduled Meets</title>
+
+    <style>
+        /* Background Animation */
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background: linear-gradient(-45deg, #00c9ff, #92fe9d, #fcb045, #ff6a95);
+            background-size: 400% 400%;
+            animation: gradientFlow 15s ease infinite; /* Animation applied */
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Keyframes for background color transition */
+        @keyframes gradientFlow {
+            0% {
+                background: #00c9ff;
+            }
+            25% {
+                background: #92fe9d;
+            }
+            50% {
+                background: #fcb045;
+            }
+            75% {
+                background: #ff6a95;
+            }
+            100% {
+                background: #00c9ff;
+            }
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+        }
+
+        .meet-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .meet-card {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .meet-card img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+
+        .meet-title {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        .meet-date {
+            color: gray;
+            margin-bottom: 15px;
+        }
+
+        .join-btn {
+            padding: 10px 15px;
+            background-color: #4285F4;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .join-btn:hover {
+            background-color: #2f69d9;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .meet-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .meet-container {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-top: 40px;
+            color: #333;
+            font-size: 24px;
+            text-transform: uppercase;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Google Meet Schedule</h2>
+
+    <!-- Upcoming Section -->
+    <div id="upcoming">
+        <div class="section-title">Upcoming Meets</div>
+        <div class="meet-container">
+            <!-- Upcoming Meet Cards go here (example) -->
+            <div class="meet-card">
+                <img src="/static/ai.jpg" alt="AI Project Image">
+                <div class="meet-title">Team Discussion - AI Project</div>
+                <div class="meet-date" id="date-1">April 13, 2025 - 10:00 AM</div>
+                <a href="https://meet.google.com/xgd-admd-yqt" class="join-btn" target="_blank">Join Now</a>
+            </div>
+            <!-- Other upcoming meetings will follow this pattern -->
+        </div>
+    </div>
+
+    <!-- Completed Section -->
+    <div id="completed">
+        <div class="section-title">Completed Meets</div>
+        <div class="meet-container">
+            <!-- Completed Meet Cards go here -->
+        </div>
+    </div>
+
+    <!-- Remaining Section -->
+    <div id="remaining">
+        <div class="section-title">Remaining Meets</div>
+        <div class="meet-container">
+            <!-- Remaining Meet Cards go here -->
+        </div>
+    </div>
+
+    <script>
+        const meets = [
+            { title: "Team Discussion - AI Project", date: "April 13, 2025 10:00 AM", link: "https://meet.google.com/xgd-admd-yqt", img: "/static/aii.jpg" },
+            { title: "Data Analysis Review", date: "April 14, 2025 2:00 PM", link: "https://meet.google.com/xgd-admd-yqt", img: "/static/pr.jpg" },
+            { title: "Hackathon Planning Meet", date: "April 15, 2025 11:30 AM", link: "https://meet.google.com/xgd-admd-yqt", img: "/static/ai.jpg" },
+            { title: "Weekly Progress Check", date: "April 16, 2025 4:00 PM", link: "https://meet.google.com/xgd-admd-yqt", img: "/static/pr.jpg" },
+            { title: "Guest Lecture: Future of AI", date: "April 17, 2025 9:30 AM", link: "https://meet.google.com/xgd-admd-yqt", img: "/static/aii.jpg" }
+        ];
+
+        // Function to categorize meetings based on the current time
+        function categorizeMeets() {
+            const now = new Date();
+            const upcomingContainer = document.getElementById('upcoming').querySelector('.meet-container');
+            const completedContainer = document.getElementById('completed').querySelector('.meet-container');
+            const remainingContainer = document.getElementById('remaining').querySelector('.meet-container');
+
+            meets.forEach(meet => {
+                const meetDate = new Date(meet.date);
+                const meetCard = `
+                    <div class="meet-card">
+                        <img src="${meet.img}" alt="${meet.title} Image">
+                        <div class="meet-title">${meet.title}</div>
+                        <div class="meet-date">${meet.date}</div>
+                        <a href="${meet.link}" class="join-btn" target="_blank">Join Now</a>
+                    </div>
+                `;
+
+                if (meetDate < now) {
+                    completedContainer.innerHTML += meetCard;
+                } else if (meetDate > now) {
+                    upcomingContainer.innerHTML += meetCard;
+                } else {
+                    remainingContainer.innerHTML += meetCard;
+                }
+            });
+        }
+
+        categorizeMeets();
+    </script>
+
+</body>
+</html>

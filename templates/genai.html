@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Gemini AI Image Analysis</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background: linear-gradient(to right, #e3f2fd, #ffffff);
+      margin: 0;
+      padding: 10px;
+      box-sizing: border-box;
+      animation: gradientFlow 15s ease infinite;
+    }
+
+    /* Keyframes for background color transition */
+    @keyframes gradientFlow {
+      0% {
+        background: linear-gradient(to right, #e3f2fd, #ffffff);
+      }
+      25% {
+        background: linear-gradient(to right, #ffffff, #e3f2fd);
+      }
+      50% {
+        background: linear-gradient(to right, #ffecb3, #ffffff);
+      }
+      75% {
+        background: linear-gradient(to right, #ffffff, #ffecb3);
+      }
+      100% {
+        background: linear-gradient(to right, #e3f2fd, #ffffff);
+      }
+    }
+
+    .container {
+      display: flex;
+      width: 100%;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .chat-container {
+      width: 70%;
+      height: 90vh;
+      background: #ffffff;
+      display: flex;
+      flex-direction: column;
+      border-radius: 16px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      margin-left: auto;
+    }
+    .image-container {
+        width: 100%;
+        max-width: 350px;
+        margin: 0 auto;
+        text-align: center;
+        position: relative;
+        border-radius: 15px;
+        box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        background-color: rgba(255, 255, 255, 0.5);
+        display: flex; /* Set display to flex */
+        flex-direction: column; /* Stack items vertically */
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+      
+      .image-container:hover {
+        transform: scale(1.05);
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+      }
+      
+      .image-container img {
+        width: 100%;
+        height: auto;
+        display: block;
+        border-bottom: 5px solid #fff;
+        border-radius: 15px 15px 0 0;
+        transition: transform 0.3s ease;
+      }
+      
+      .image-container img:hover {
+        transform: scale(1.00);
+      }
+      
+      .image-text {
+        padding: 10px 15px;
+        background-color: rgba(0, 0, 0, 0.7);
+        color: white;
+        border-radius: 0 0 15px 15px;
+        font-family: Arial, sans-serif;
+        font-size: 14px; /* Adjusted font size */
+        line-height: 1.2; /* Reduced line height */
+        margin: 0;
+        text-align: left; /* Align text to the left */
+      }
+      
+    #chat-history {
+      flex: 1;
+      padding: 15px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      background-color: #f9f9f9;
+    }
+
+    .message {
+      padding: 10px 14px;
+      border-radius: 12px;
+      margin: 6px 0;
+      max-width: 75%;
+      word-wrap: break-word;
+      font-size: 14px;
+      line-height: 1.5;
+      transition: all 0.2s ease-in-out;
+    }
+
+    .user-message {
+      background-color: #0d6efd;
+      color: #fff;
+      align-self: flex-start;
+      border-bottom-left-radius: 0;
+    }
+
+    .ai-message {
+      background-color: #e0e0e0;
+      color: #000;
+      align-self: flex-end;
+      border-bottom-right-radius: 0;
+    }
+
+    .input-container {
+      display: flex;
+      padding: 12px;
+      background: #fff;
+      border-top: 1px solid #ddd;
+      gap: 10px;
+      align-items: center;
+    }
+
+    input[type="text"] {
+      flex: 1;
+      padding: 10px 12px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 14px;
+      transition: border-color 0.2s ease;
+    }
+
+    input[type="text"]:focus {
+      border-color: #0d6efd;
+      outline: none;
+    }
+
+    button {
+      padding: 10px 15px;
+      font-size: 14px;
+      border: none;
+      border-radius: 8px;
+      background-color: #0d6efd;
+      color: white;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    h2 {
+  padding-left: 5%;
+}
+
+    button:hover {
+      background-color: #084298;
+    }
+  </style>
+</head>
+<body>
+  <div class="image-container">
+    <img src="static/little_robot.jpg" alt="Image description" style="width: 100%; max-width: 400px; height: auto;" />
+
+    <div class="image-text">
+      <p>Welcome to our platform! 🎉</p>
+      <p>Interact and explore the amazing features! 💬✨</p>
+      <p>Chat with others and share your thoughts! 🗣💭</p>
+      <p>Enjoy seamless navigation and smooth experience! 🚀🌟</p>
+      <p>Have fun and make the most of your time here! 😄🎉</p>
+    </div>
+  </div>
+
+  <div class="chat-container">
+    <h2>Visionary AI Chat & Image Insight</h2>
+    <div id="chat-history"></div>
+
+    <div class="input-container">
+      <input type="text" id="userInput" placeholder="Type your question..." />
+      <label for="imageInput" class="custom-file-upload">📁</label>
+      <input type="file" id="imageInput" accept="image/*" />
+      <button onclick="sendMessage()">Send</button>
+      <button class="mic-button" id="micButton" onclick="startListening()" aria-label="Start voice input">🎤</button>
+    </div>
+
+    <div class="image-output" id="image-output"></div>
+  </div>
+
+  <script src="{{ url_for('static', filename='script1.js') }}"></script>
+</body>
+</html>

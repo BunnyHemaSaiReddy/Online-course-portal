@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Signup</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+  <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-auth-compat.js"></script>
+  <style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: 'Poppins', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    color: #ffffff;
+    animation: fadeIn 1.5s ease;
+    position: relative;
+    z-index: 1;
+    overflow: hidden; /* Prevent scrolling on the body */
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  
+  .video-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    overflow: hidden;
+  }
+  
+  .video-foreground iframe {
+    width: 100vw;
+    height: 56.25vw;
+    min-height: 100vh;
+    min-width: 177.77vh;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+  }
+  
+  .container {
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(12px);
+    border-radius: 20px;
+    padding: 40px 30px;
+    text-align: center;
+    width: 90%;
+    max-width: 640px;
+    margin: auto;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+    height: 500px; /* Fixed height */
+    overflow-y: auto; /* Allow scrolling inside the container */
+  }
+  
+  h2 {
+    margin-bottom: 20px;
+    font-size: 2rem;
+  }
+  
+  form input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: none;
+    border-radius: 8px;
+    outline: none;
+    font-size: 1rem;
+  }
+  
+  form button {
+    width: 100%;
+    padding: 12px;
+    margin-top: 10px;
+    font-size: 1rem;
+    font-weight: bold;
+    border-radius: 25px;
+    border: none;
+    cursor: pointer;
+    transition: 0.3s ease;
+  }
+  
+  #signupBtn {
+    background: linear-gradient(to right, #00c6ff, #0072ff);
+    color: white;
+    box-shadow: 0 4px 15px rgba(0, 114, 255, 0.4);
+  }
+  
+  #googleSignInBtn {
+    background: linear-gradient(to right, #ff5858, #f09819);
+    color: white;
+    box-shadow: 0 4px 15px rgba(240, 152, 25, 0.4);
+  }
+  
+  form button:hover {
+    opacity: 0.9;
+  }
+  
+  p {
+    margin-top: 20px;
+  }
+  
+  a {
+    color: #00ffff;
+    text-decoration: none;
+  }
+  
+  #error-msg {
+    color: #ff6b6b;
+    margin-top: 15px;
+  }
+</style>  
+</head>
+<body>
+  <!-- Video Background -->
+  <div class="video-background">
+    <div class="video-foreground">
+      <iframe
+        src="https://www.youtube.com/embed/BadB1z-V_qU?autoplay=1&mute=1&controls=0&loop=1&playlist=BadB1z-V_qU&modestbranding=1&showinfo=0&rel=0"
+        frameborder="0"
+        allow="autoplay"
+        allowfullscreen>
+      </iframe>
+    </div>
+  </div>
+
+  <!-- Signup Form Container -->
+  <div class="container">
+    <h2>Signup Form</h2>
+    <h4>Enter your Details correctly, These will be provided in your profile.</h4>
+    <!-- Step 1 -->
+    <div id="step1">
+      <form id="step1Form" onsubmit="event.preventDefault(); showStep2();">
+        <input name="name" placeholder="Name" required>
+        <input name="gender" placeholder="Gender" required>
+        <input name="phone" placeholder="Phone" required>
+        <input name="education" placeholder="Education" required>
+        <input name="school" placeholder="School" required>
+        <input name="college" placeholder="College" required>
+        <input name="course" placeholder="Course" required>
+        <input name="domain" placeholder="Domain" required>
+        <input name="skills" placeholder="Skills" required>
+        <button type="submit">Next</button>
+      </form>
+    </div>
+  
+    <!-- Step 2 -->
+    <div id="step2" style="display: none;">
+      <form action="/signup" method="POST" onsubmit="return submitCombinedForm();" id="step2Form">
+        <input name="email" type="email" placeholder="Email" required>
+        <input name="password" type="password" placeholder="Password" required>
+        <input name="confirm_password" type="password" placeholder="Confirm Password" required>
+
+        <!-- Hidden Step 1 Fields -->
+        <input type="hidden" name="name">
+        <input type="hidden" name="gender">
+        <input type="hidden" name="phone">
+        <input type="hidden" name="education">
+        <input type="hidden" name="school">
+        <input type="hidden" name="college">
+        <input type="hidden" name="course">
+        <input type="hidden" name="domain">
+        <input type="hidden" name="skills">
+
+        <button type="submit" id="signupBtn">Sign up with Email</button>
+        <button type="button" id="googleSignInBtn">Sign up with Google</button>
+      </form>
+    </div>
+    <br>
+    <br>
+    <hr>
+    <p>Already have an account? <a href="/login">Log In</a></p>
+    <div id="error-msg"></div>
+  </div>
+
+  <script>
+    function showStep2() {
+      const form = document.getElementById('step1Form');
+      const formData = new FormData(form);
+
+      for (let [key, value] of formData.entries()) {
+        const hiddenInput = document.querySelector(`#step2Form input[name="${key}"]`);
+        if (hiddenInput) hiddenInput.value = value;
+      }
+
+      document.getElementById('step1').style.display = 'none';
+      document.getElementById('step2').style.display = 'block';
+    }
+
+    function submitCombinedForm() {
+      const pass = document.querySelector('input[name="password"]').value;
+      const confirm = document.querySelector('input[name="confirm_password"]').value;
+      if (pass !== confirm) {
+        alert("Passwords do not match!");
+        return false;
+      }
+      const btn = document.getElementById("signupBtn");
+      btn.disabled = true;
+      btn.textContent = "Signing Up...";
+      return true;
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const firebaseConfig = {
+        apiKey: "AIzaSyA_dvNAf19mcXXdLZjoHsgC8SmmLKcbKKg",
+        authDomain: "signup-login-b28f5.firebaseapp.com",
+        projectId: "signup-login-b28f5",
+        storageBucket: "signup-login-b28f5.appspot.com",
+        messagingSenderId: "946139293369",
+        appId: "1:946139293369:web:25c7ab86146ec144a35d68",
+        measurementId: "G-FQ8CE9TTK0"
+      };
+
+      firebase.initializeApp(firebaseConfig);
+      const auth = firebase.auth();
+      const errorMsg = document.getElementById("error-msg");
+
+      document.getElementById("googleSignInBtn").addEventListener("click", () => {
+        const provider = new firebase.auth.GoogleAuthProvider();
+        auth.signInWithPopup(provider)
+          .then(result => result.user.getIdToken())
+          .then(idToken => {
+            const form = document.getElementById('step1Form');
+            const formData = new FormData(form);
+            let userDetails = {};
+            for (let [key, value] of formData.entries()) {
+              userDetails[key] = value;
+            }
+
+            return fetch('/google-login', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ idToken, formData: userDetails })
+            });
+          })
+          .then(response => response.json())
+          .then(data => {
+            if (data.redirect) {
+              window.location.href = data.redirect;
+            } else {
+              errorMsg.textContent = data.error || "Google login failed. Please try again.";
+            }
+          })
+          .catch(error => {
+            errorMsg.textContent = `Google Login Error: ${error.message}`;
+            console.error(error);
+          });
+      });
+    });
+  </script>
+</body>
+</html>

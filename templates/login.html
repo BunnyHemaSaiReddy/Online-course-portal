@@ -1,0 +1,248 @@
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login | VidyAI++</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <script src="{{ url_for('static', filename='script.js') }}"></script>
+  
+  <!-- Firebase Auth (Optional for Google Sign-in) -->
+  <script src="https://www.gstatic.com/firebasejs/9.6.11/firebase-app-compat.js" defer></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.11/firebase-auth-compat.js" defer></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      color: #ffffff;
+      animation: fadeIn 1.5s ease;
+    }
+    .video-background {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      overflow: hidden;
+    }
+
+    .video-foreground iframe {
+      width: 100vw;
+      height: 56.25vw; /* 16:9 ratio */
+      min-height: 100vh;
+      min-width: 177.77vh;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+    }
+
+    nav {
+      width: 100%;
+      padding: 20px 40px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      backdrop-filter: blur(10px);
+      background: rgba(255, 255, 255, 0.05);
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 1000;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 25px;
+    }
+
+    nav ul li a {
+      color: #e0e0e0;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+
+    nav ul li a:hover {
+      color: #fff;
+    }
+
+    .container {
+      margin-top: 130px;
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(12px);
+      border-radius: 20px;
+      padding: 50px 40px;
+      text-align: center;
+      width: 90%;
+      max-width: 420px;
+      margin-left: auto;
+      margin-right: auto;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    .container img {
+      width: 90px;
+      height: auto;
+      margin-bottom: 20px;
+      border-radius: 12px;
+    }
+
+    h2 {
+      margin-bottom: 20px;
+      font-size: 2rem;
+    }
+
+    input {
+      width: 90%;
+      padding: 12px;
+      margin-bottom: 15px;
+      border: none;
+      border-radius: 6px;
+      outline: none;
+    }
+
+    .email-btn, .google-btn {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 50px;
+      color: white;
+      font-weight: 600;
+      cursor: pointer;
+      margin-bottom: 15px;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+    }
+
+    .email-btn {
+      background: linear-gradient(to right, #00c6ff, #0072ff);
+      box-shadow: 0 4px 15px rgba(0, 114, 255, 0.4);
+    }
+
+    .google-btn {
+      background: linear-gradient(to right, #ff5858, #f09819);
+      box-shadow: 0 4px 15px rgba(240, 152, 25, 0.4);
+    }
+
+    .email-btn:hover, .google-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 6px 20px rgba(255, 255, 255, 0.2);
+    }
+
+    a {
+      color: #e0e0e0;
+      text-decoration: none;
+      font-size: 0.9rem;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .footer {
+      margin-top: 20px;
+      font-size: 0.8rem;
+      text-align: center;
+      color: #ccc;
+    }
+
+    @keyframes fadeIn {
+      0% {
+        opacity: 0;
+        transform: translateY(40px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 500px) {
+      nav {
+        flex-direction: column;
+        gap: 15px;
+      }
+
+      nav ul {
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .container {
+        padding: 35px 25px;
+      }
+
+      .email-btn, .google-btn {
+        font-size: 0.95rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="video-background">
+    <div class="video-foreground">
+      <iframe
+        src="https://www.youtube.com/embed/BadB1z-V_qU?autoplay=1&mute=1&controls=0&loop=1&playlist=BadB1z-V_qU&modestbranding=1&showinfo=0&rel=0"
+        frameborder="0"
+        allow="autoplay"
+        allowfullscreen>
+      </iframe>
+    </div>
+  </div>
+
+  <!-- Nav without logo -->
+  <nav>
+    <ul>
+      <li><a href="home.html#about">About Us</a></li>
+      <li><a href="home.html#community">Community</a></li>
+      <li><a href="home.html#support">Support</a></li>
+    </ul>
+  </nav>
+
+  <div class="container">
+    <img src="logo.png" alt="VidyAI++ Logo" />
+    <h2>Log In</h2>
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <ul>
+          {% for msg in messages %}
+            <li style="color: {% if '✅' in msg %}green{% elif '⚠️' in msg %}orange{% else %}red{% endif %};">
+              {{ msg }}
+            </li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+    <form method="POST" action="/login">
+      <input type="email" name="email" placeholder="Enter your email" required><br>
+      <input type="password" name="password" placeholder="Enter your password" required><br>
+      <button type="submit" class="email-btn">Log In</button>
+    </form>
+
+    <br>
+    <a href="/forgot-password">Forgot Password?</a>
+    <p>Don't have an account? <a href="/signup">Sign Up</a></p>
+    <button id="googleSignInBtn" class="google-btn">Sign In with Google</button>
+
+    <div class="footer">&copy; 2025 VidyAI++. All rights reserved.</div>
+  </div>
+
+</body>
+</html>

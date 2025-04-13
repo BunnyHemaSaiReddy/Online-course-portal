@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Educational Video Search</title>
+    <style>
+        /* Background Animation */
+        body {
+            font-family: Arial, sans-serif;
+            padding: 10px;
+            background: linear-gradient(-45deg, #00c9ff, #92fe9d, #fcb045, #ff6a95);
+            background-size: 400% 400%;
+            animation: gradientFlow 15s ease infinite; /* Animation applied */
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Keyframes for background color transition */
+        @keyframes gradientFlow {
+            0% {
+                background: #00c9ff;
+            }
+            25% {
+                background: #92fe9d;
+            }
+            50% {
+                background: #fcb045;
+            }
+            75% {
+                background: #ff6a95;
+            }
+            100% {
+                background: #00c9ff;
+            }
+        }
+
+        /* Container and Layout */
+        .container {
+            width: 100%;
+            max-width: 1000px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        h2 {
+            font-size: 2em;
+            color: #2C6CFF;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        h3 {
+            font-size: 1.2em;
+            color: #333;
+            margin-top: 15px;
+        }
+
+        .search-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 15px;
+        }
+
+        #query {
+            padding: 8px;
+            width: 55%;
+            font-size: 14px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+
+        .btn {
+            padding: 8px 16px;
+            margin-left: 8px;
+            font-size: 14px;
+            cursor: pointer;
+            background-color: #4285f4; /* Blue button */
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+
+        .video-item {
+            width: 270px;
+            margin: 12px;
+            text-align: center;
+            border-radius: 8px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        iframe {
+            width: 100%;
+            height: 180px;
+            border-radius: 8px;
+        }
+
+        .video-details {
+            margin-top: 8px;
+            color: #333;
+        }
+
+        .video-details p {
+            margin: 4px 0;
+        }
+
+        /* Flexbox layout for video container */
+        #video-container {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            overflow-x: auto;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Search for Educational Videos</h2>
+    <div class="search-container">
+        <input type="text" id="query" placeholder="Enter search term..." />
+        <button class="btn" onclick="searchVideos()">Search</button>
+    </div>
+
+    <h3>Relevant Videos</h3>
+    <div id="video-container">
+        <!-- Default Educational Videos -->
+        <div class="video-item">
+            <iframe src="https://www.youtube.com/embed/IlU-zDU6aQ0" allowfullscreen></iframe>
+            <div class="video-details">
+                <p><strong>Learn JavaScript</strong></p>
+                <p>Author: freeCodeCamp</p>
+                <p>Length: 10:00 mins</p>
+            </div>
+        </div>
+        <div class="video-item">
+            <iframe src="https://www.youtube.com/embed/O96fE1E-rf8" allowfullscreen></iframe>
+            <div class="video-details">
+                <p><strong>Python for Beginners</strong></p>
+                <p>Author: Programming with Mosh</p>
+                <p>Length: 8:30 mins</p>
+            </div>
+        </div>
+        <div class="video-item">
+            <iframe src="https://www.youtube.com/embed/5MgBikgcWnY" allowfullscreen></iframe>
+            <div class="video-details">
+                <p><strong>How to Learn Python</strong></p>
+                <p>Author: Corey Schafer</p>
+                <p>Length: 12:15 mins</p>
+            </div>
+        </div>
+        <div class="video-item">
+            <iframe src="https://www.youtube.com/embed/9O6jQ2U8nQ0" allowfullscreen></iframe>
+            <div class="video-details">
+                <p><strong>Introduction to Data Science</strong></p>
+                <p>Author: Data Science Dojo</p>
+                <p>Length: 14:00 mins</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    async function searchVideos() {
+        let query = document.getElementById("query").value.trim();
+        if (query === "") {
+            alert("Please enter a search term.");
+            return;
+        }
+
+        try {
+            let response = await fetch("/search", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ query: query })
+            });
+
+            let data = await response.json();
+
+            if (data.error) {
+                alert(data.error);
+                return;
+            }
+
+            displayVideos(data.videos);
+        } catch (error) {
+            console.error("Error fetching videos:", error);
+            alert("Failed to load videos. Please try again later.");
+        }
+    }
+
+    function displayVideos(videoDetails) {
+        let container = document.getElementById("video-container");
+        container.innerHTML = ""; // Clear default or previous results
+
+        videoDetails.forEach(video => {
+            let videoElement = document.createElement("div");
+            videoElement.classList.add("video-item");
+            videoElement.innerHTML = `
+                <iframe 
+                    src="https://www.youtube.com/embed/${extractVideoId(video.url)}" 
+                    frameborder="0" 
+                    allow="encrypted-media" 
+                    allowfullscreen>
+                </iframe>
+                <div class="video-details">
+                    <p><strong>${video.title}</strong></p>
+                    <p>Author: ${video.author}</p>
+                    <p>Length: ${video.length} seconds</p>
+                </div>
+            `;
+            container.appendChild(videoElement);
+        });
+    }
+
+    function extractVideoId(url) {
+        let match = url.match(/(?:v=|\/embed\/|\/\d\/|\/vi\/|\/v\/|youtu.be\/|\/e\/|watch\?v=)([^#\&\?]*)/);
+        return match && match[1] ? match[1] : null;
+    }
+</script>
+
+</body>
+</html>

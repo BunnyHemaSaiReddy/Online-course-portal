@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Bunny Portal</title>
+  <style>/* Import Google Font */
+/* Import Google Font */
+@import url('https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Comic Neue', cursive;
+  text-align: center;
+  padding: 50px 20px;
+  min-height: 100vh;
+  background-color: #f1f1f1;
+  color: #333;
+}
+
+h2 {
+  font-size: 2.8em;
+  margin-bottom: 10px;
+  color: #2e7d32; /* Changed from yellow to dark green */
+  animation: fadeIn 1s ease-in;
+}
+
+p {
+  font-size: 1.1em;
+  margin-bottom: 20px;
+  color: #444;
+}
+
+#user-email {
+  display: none;
+}
+
+.course-container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 25px;
+  margin: 40px auto;
+  padding: 0 10px;
+}
+
+.course-box {
+  width: 220px;
+  background: #ffffff;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+  cursor: pointer;
+  border: 2px solid #e0e0e0;
+}
+
+.course-box img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  display: block;
+}
+
+.course-box p {
+  background-color: #4CAF50; /* Green background for course buttons */
+  color: white;
+  font-size: 20px;
+  font-weight: bold;
+  padding: 15px;
+  margin: 0;
+  border-top: 1px solid #fff;
+}
+
+.course-box:hover {
+  transform: scale(1.05);
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.2);
+  border-color: #388e3c;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+h3 {
+  font-size: 1.7em;
+  color: #333333;
+  margin-bottom: 10px;
+}
+h1 {
+  font-size: 2.5em; /* Smaller font size */
+  color: #2C6CFF; /* Blue color for the text */
+  font-weight: 700; /* Bold for a stronger impact */
+  text-transform: uppercase; /* Uppercase letters for a modern look */
+  margin: 10px 0 20px 5%; /* Reduced space above and below the header */
+  padding: 2px; /* Reduced padding */
+  background: linear-gradient(90deg, #6a5acd, #2e8b57); /* Gradient background */
+  color: white; /* White text to contrast the background */
+  border-radius: 10px; /* Rounded corners */
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1); /* Light shadow effect */
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Slight text shadow for depth */
+  letter-spacing: 2px; /* Slight letter spacing for style */
+  width: 80%; /* Set the width to 80% of the container */
+  max-width: 400px; /* Max width for better control */
+   /* Center the heading horizontally */
+  align:center;
+}
+
+
+  </style>
+
+  
+</head>
+<body>
+  <h2><span style="color: #0054d1;">Welcome to Your Ultimate Learning Portal!</span> </h2>
+  <p style="color: black;">An AI-powered platform designed to empower BPL government school students through personalized, regional language learning.
+    Experience smart mentorship, adaptive lessons, and engaging content aligned with India's NEP vision.
+    Explore courses to boost your knowledge!</p>
+  
+    
+  <hr></hr>
+  <br>
+
+  <h1>  Course names</h1>
+  <p id="user-email">{{ session.get('user') }}</p>
+
+  <div class="course-container">
+    <button class="course-box" onclick="navigate()">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSMlFMEQU2jdqr0mbwY14cL9GKJZ7YIYzTKZA&s" alt="ML Course">
+      <p>ML Course</p>
+    </button>
+    <button class="course-box" onclick="navigate2()">
+      <img src="\static\maths.jpg" alt="Maths">
+      <p>Maths</p>
+    </button>
+    <button class="course-box" onclick="navigate()">
+      <img src="\static\english.jpg" alt="English">
+      <p>English</p>
+    </button>
+    <button class="course-box" onclick="navigate()">
+      <img src="\static\Physics.jpg" alt="Social">
+      <p>Physics</p>
+    </button>
+    <button class="course-box" onclick="navigate()">
+      <img src="\static\Biology.png" alt="Biology">
+      <p>Biology</p>
+    </button>
+  </div>
+  
+  <hr>
+  <br>
+  <br>
+  <br>
+
+  <div style="margin-bottom: 60px; margin-top: 30px; padding-left: 20%; padding-right: 20%;">
+    <h3 style="color: #333366;">📘 Personalized Learning for Every Child</h3>
+    <p>
+      VidyAI++ understands that every student is unique. Our AI engine adapts lessons based on your learning style — visual, auditory, or kinesthetic. 
+      Whether you prefer watching, listening, or doing, we’ll shape the content to help you learn better and faster.
+    </p>
+    <img src="https://cdn-icons-png.flaticon.com/512/2965/2965567.png" alt="Learning Style" width="120" style="margin: 20px;">
+</div>
+
+<div style="margin-bottom: 60px; padding-left: 20%; padding-right: 20%;">
+    <h3 style="color: #333366;">🗣️ Speak & Learn in Your Language</h3>
+    <p>
+      Don’t worry about English. VidyAI++ lets you learn in your own regional language with the power of AI. 
+      Our voice-based system reads lessons aloud and translates content in real-time — making learning easy and fun, even if you can't read!
+    </p>
+    <img src="https://cdn-icons-png.flaticon.com/512/906/906175.png" alt="Language Support" width="120" style="margin: 20px;">
+</div>
+
+<div style="margin-bottom: 60px; padding-left: 20%; padding-right: 20%;">
+    <h3 style="color: #333366;">👨‍🏫 Real Mentors Who Guide You</h3>
+    <p>
+      Our AI finds the best mentors for you — teachers, volunteers, or NGOs — based on your subject needs, region, and comfort. 
+      You’ll never feel alone in your learning journey. Every step, someone will be there to support and inspire you.
+    </p>
+    <img src="https://cdn-icons-png.flaticon.com/512/4727/4727496.png" alt="Mentorship" width="120" style="margin: 20px;">
+</div>
+
+<div style="margin-bottom: 60px; padding-left: 20%; padding-right: 20%;">
+    <h3 style="color: #333366;">🎯 Learning that Understands You</h3>
+    <p>
+      Feeling tired or confused? Our smart camera tools track your focus and emotions to adapt the lesson speed. 
+      You’ll get more help when needed, or get challenges when you’re ready to fly! It’s like a teacher who watches over you.
+    </p>
+    <img src="https://cdn-icons-png.flaticon.com/512/1090/1090664.png" alt="Emotion Detection" width="120" style="margin: 20px;">
+</div>
+
+<div style="margin-bottom: 60px; padding-left: 20%; padding-right: 20%;">
+    <h3 style="color: #333366;">🏆 Earn Badges & Certifications</h3>
+    <p>
+      Learning is fun! Earn points, badges, and certificates as you complete lessons. Track your progress with skill maps and keep your learning streaks alive.
+      The more you learn, the more rewards you unlock — just like a game!
+    </p>
+    <img src="https://cdn-icons-png.flaticon.com/512/1828/1828884.png" alt="Badges" width="120" style="margin: 20px;">
+</div>
+
+<div style="margin-bottom: 60px; padding-left: 20%; padding-right: 20%;">
+    <h3 style="color: #333366;">📴 Learn Anytime, Even Offline</h3>
+    <p>
+      Internet issues? No problem! VidyAI++ works offline too using smart edge technology. 
+      Students from remote villages can continue learning without needing strong internet access.
+    </p>
+    <img src="https://cdn3.iconfinder.com/data/icons/education-business-part-3/513/51-1024.png" alt="Offline Support" width="120" style="margin: 20px;">
+</div>
+
+
+
+
+
+  <hr><div class="footer-section" style="display: flex; flex-wrap: wrap; gap: 40px; background-color: #f1f8fc; padding: 40px; font-family: Arial, sans-serif;">
+  
+    <!-- Contact Us -->
+    <div class="footer-item" style="flex: 1; min-width: 220px;">
+      <h4 style="font-weight: bold; font-size: 1.2em;">Contact Us</h4>
+      <p><i class="fas fa-envelope" style="color:#4CAF50; margin-right: 8px;"></i> <strong>Email:</strong> bunny@vidyai.com</p>
+      <p><i class="fas fa-phone" style="color:#2196F3; margin-right: 8px;"></i> <strong>Phone:</strong> 6300873587</p>
+      <p><i class="fab fa-twitter" style="color:#1DA1F2; margin-right: 8px;"></i> <a href="https://twitter.com/vidyai" target="_blank">Twitter</a></p>
+      <p><i class="fab fa-facebook" style="color:#1877F2; margin-right: 8px;"></i> <a href="https://facebook.com/vidyai" target="_blank">Facebook</a></p>
+      <p><i class="fab fa-linkedin" style="color:#0077b5; margin-right: 8px;"></i> <a href="https://linkedin.com/company/vidyai" target="_blank">LinkedIn</a></p>
+    </div>
+  
+    <!-- About -->
+    <div class="footer-item" style="flex: 1; min-width: 220px;">
+      <h4 style="font-weight: bold; font-size: 1.2em;">About</h4>
+      <p><i class="fas fa-robot" style="color:#4CAF50; margin-right: 8px;"></i> VidyAI++ is an AI-powered platform.</p>
+      <p>We aim to make learning accessible for all.</p>
+      <p>Supports personalized learning with AI.</p>
+      <p>Lessons in regional languages for better understanding.</p>
+    </div>
+  
+    <!-- Terms & Conditions -->
+    <div class="footer-item" style="flex: 1; min-width: 220px;">
+      <h4 style="font-weight: bold; font-size: 1.2em;">Terms & Conditions</h4>
+      <p><i class="fas fa-check-circle" style="color:#2196F3; margin-right: 8px;"></i> By using this website, you agree to our terms.</p>
+      <p><i class="fas fa-link" style="color:#2196F3; margin-right: 8px;"></i> Terms available on our website.</p>
+      <p>We reserve the right to change the terms.</p>
+      <p>Terms are subject to change.</p>
+    </div>
+  
+    <!-- Privacy Policy -->
+    <div class="footer-item" style="flex: 1; min-width: 220px;">
+      <h4 style="font-weight: bold; font-size: 1.2em;">Privacy Policy</h4>
+      <p><i class="fas fa-shield-alt" style="color:#FF5722; margin-right: 8px;"></i> Your privacy is our priority.</p>
+      <p><i class="fas fa-lock" style="color:#FF5722; margin-right: 8px;"></i> We protect your data.</p>
+      <p>Your data is encrypted and secure.</p>
+      <p>We do not sell your personal information.</p>
+    </div>
+  
+  </div>
+
+
+
+  <script>
+    function navigate() {
+      const email = document.getElementById("user-email").textContent.trim();
+      console.log("Navigating with email:", email);
+      localStorage.setItem("userEmail", email);
+
+      if (email) {
+        const targetUrl = `http://127.0.0.1:8000/email?email=${encodeURIComponent(email)}`;
+        window.open(targetUrl, '_blank');
+      } else {
+        alert("Please ensure you're logged in.");
+      }
+    }
+    function navigate2() {
+      const email = document.getElementById("user-email").textContent.trim();
+      console.log("Navigating with email:", email);
+      localStorage.setItem("userEmail", email);
+
+      if (email) {
+        const targetUrl = `http://127.0.0.1:7000/email?email=${encodeURIComponent(email)}`;
+        window.open(targetUrl, '_blank');
+      } else {
+        alert("Please ensure you're logged in.");
+      }
+    }
+  </script>
+</body>
+</html>

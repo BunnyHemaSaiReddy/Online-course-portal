@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Navigation Buttons</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+
+  <style>
+    body {
+      margin: 0;
+   /* Reduced padding-top to bring the buttons higher */
+      background: linear-gradient(to right, #ffffff, #eeeeee); /* Mix of white and light gray */
+    }
+
+    .top-header {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: linear-gradient(90deg, #aaade5, #a2a5df); /* Beautiful gradient */
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      z-index: 1000;
+      padding: 10px 20px;
+    }
+
+    .button-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .left-buttons, .right-buttons {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .btn-icon {
+      width: 40px;
+      height: 40px;
+      padding: 0;
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      transition: transform 0.2s ease, box-shadow 0.3s;
+    }
+
+    .btn-icon:hover {
+      transform: scale(1.15);
+      box-shadow: 0 0 10px rgba(255,255,255,0.7);
+    }
+
+    .btn-text {
+      padding: 6px 14px;
+      font-size: 14px;
+      border-radius: 20px;
+      transition: background 0.3s, transform 0.2s ease, box-shadow 0.3s;
+      font-weight: 500;
+    }
+
+    .btn-text:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+
+    a.btn-text {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .top-header p {
+      color: #ffffff;
+      font-size: 16px;
+      font-weight: 500;
+      text-shadow: 1px 1px 2px #00000044;
+      margin: 10px 0;
+    }
+
+    .bi {
+      filter: drop-shadow(1px 1px 1px rgba(0,0,0,0.4));
+    }
+
+    /* Custom purple style for Quiz button */
+    .btn-purple {
+      background-color: #6f42c1;
+      color: white;
+    }
+
+    .btn-purple:hover {
+      background-color: #5a34a4;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="top-header">
+    <div class="button-container">
+     
+      <!-- Left: Icon-only buttons -->
+      <div class="left-buttons">
+        <pre>     </pre>
+        <button onclick="goToMessages()" class="btn btn-warning btn-icon" title="Messages">
+          <i class="bi bi-chat-dots"></i>
+        </button>
+        <pre>    </pre>
+        <button onclick="goToYouTube()" class="btn btn-danger btn-icon" title="YouTube">
+          <i class="bi bi-youtube"></i>
+        </button>
+        <pre>   </pre>
+        <button onclick="openLiveMeet()" class="btn btn-primary btn-icon" title="Live Meet">
+          <i class="bi bi-camera-video-fill"></i>
+        </button>
+      </div>
+
+      <!-- Live Date and Time -->
+      <p id="live-clock" style="color: #fff; font-size: 16px; font-weight: 500;"></p>
+
+      <script>
+        function updateClock() {
+          const now = new Date();
+          const time = now.toLocaleTimeString();
+          const date = now.toLocaleDateString(undefined, {
+            weekday: 'short',
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric'
+          });
+
+          document.getElementById('live-clock').innerText = `${date} | ${time}`;
+        }
+
+        updateClock(); // Call once initially
+        setInterval(updateClock, 1000); // Update every second
+      </script>
+
+      <!-- Right: Icon + text buttons -->
+      <div class="right-buttons">
+        <button onclick="goToGenAI()" class="btn btn-success btn-text">
+          <i class="bi bi-robot me-1"></i> Chat
+        </button>
+        <pre>   </pre>
+        <button onclick="goToQuiz()" class="btn btn-purple btn-text">
+          <i class="bi bi-question-circle-fill me-1"></i> Quiz
+        </button>
+        <pre>   </pre>
+        <a href="https://huggingface.co/spaces/Bunny12342d/facedetection?logs=build" target="_blank" class="btn btn-info btn-text">
+          <i class="bi bi-emoji-smile-fill me-1"></i> Emotion Detection
+        </a>
+        <pre>     </pre>
+      </div>
+      
+    </div>
+  </div>
+
+  <script>
+    function goToMessages() {
+      parent.frames['contentFrame'].location.href = "/message";
+    }
+
+    function goToGenAI() {
+      parent.frames['contentFrame'].location.href = "/genai";
+    }
+
+    function goToYouTube() {
+      parent.frames['contentFrame'].location.href = "/youtube";
+    }
+
+    function openLiveMeet() {
+      parent.frames['contentFrame'].location.href = "/meet";
+    }
+
+    function goToQuiz() {
+      parent.frames['contentFrame'].location.href = "/quiz";
+    }
+  </script>
+
+</body>
+</html>

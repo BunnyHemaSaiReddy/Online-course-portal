@@ -1,1 +1,18 @@
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dashboard</title>
+</head>
+<frameset rows="10%,*,8%" border="2">
+  <frame src="{{ url_for('header') }}" name="headerFrame" scrolling="no" noresize>
+  <frame src="{{ url_for('welcome') }}" name="contentFrame">
+  <frame src="{{ url_for('footer') }}" name="footerFrame" scrolling="no" noresize>
+  <noframes>
+    <body>
+      <p>Your browser does not support frames. Please update your browser.</p>
+    </body>
+  </noframes>
+</frameset>
+</html>

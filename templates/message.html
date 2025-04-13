@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Messages</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <style>
+        @keyframes gradientFlow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            text-align: center;
+            padding: 50px 20px;
+            min-height: 100vh;
+            background: linear-gradient(-45deg, #00c9ff, #92fe9d, #fcb045, #ff6a95);
+            background-size: 400% 400%;
+            animation: gradientFlow 15s ease infinite;
+            margin: 0;
+        }
+
+        .message-container {
+            width: 60%;
+            max-width: 850px;
+            margin: 0 auto;
+            padding: 10px;
+            background-color: #ffffffd9;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            /* Remove height or set it to auto */
+            height: auto;
+        }
+
+        h2 {
+            color: #333;
+            font-size: 26px;
+            margin-bottom: 20px;
+        }
+
+        .chat-box {
+            max-height: 400px;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin-bottom: 20px;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+        }
+
+        .message {
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 5px;
+            background-color: #e0e0e0;
+            text-align: left;
+        }
+
+        .other-message {
+            background-color: #d1e7ff;
+        }
+
+        .message strong {
+            color: #007bff;
+        }
+
+        .input-area {
+            display: flex;
+            gap: 10px;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        textarea {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            font-family: 'Poppins', sans-serif;
+            resize: none;
+            min-height: 45px;
+        }
+
+        button {
+            padding: 10px 15px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            color: white;
+        }
+
+        button:hover {
+            opacity: 0.9;
+        }
+
+        #voiceInputButton {
+            background-color: #28a745;
+        }
+
+        #sendButton {
+            background-color: #007bff;
+        }
+
+        .empty-message {
+            text-align: center;
+            color: #888;
+            font-size: 16px;
+        }
+
+        .error-message {
+            color: red;
+            text-align: center;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="message-container">
+        <h2>Messages</h2>
+
+        <!-- Chat Box -->
+        <div id="universal-chat-messages" class="chat-box"></div>
+
+        <!-- Input Area -->
+        <div class="input-area">
+            <textarea id="chat-input" placeholder="Type your message..." rows="2"></textarea>
+            <button id="voiceInputButton" onclick="startVoiceInput()">🎤</button>
+            <button id="sendButton" onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+
+    <script>
+        function sendMessage() {
+            let messageInput = document.getElementById("chat-input");
+            let message = messageInput.value.trim();
+
+            if (message !== "") {
+                fetch("/send_message", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ message: message })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        messageInput.value = "";
+                        loadMessages();
+                    } else {
+                        alert("Failed to send message. Please try again.");
+                    }
+                })
+                .catch(error => {
+                    console.error("Error sending message:", error);
+                    alert("An error occurred while sending the message.");
+                });
+            } else {
+                alert("Message cannot be empty.");
+            }
+        }
+
+        function loadMessages() {
+            fetch("/get_messages")
+                .then(response => response.json())
+                .then(messages => {
+                    let chatBox = document.getElementById("universal-chat-messages");
+                    chatBox.innerHTML = "";
+
+                    if (messages.length === 0) {
+                        chatBox.innerHTML = "<p class='empty-message'>No messages yet.</p>";
+                        return;
+                    }
+
+                    messages.forEach(msg => {
+                        let userEmail = msg.user_email || "Unknown";
+                        let messageText = msg.message || "No message";
+                        userEmail = userEmail.replace(/@gmail.com$/, "");
+
+                        let msgElement = document.createElement("div");
+                        msgElement.classList.add("message", "other-message");
+                        msgElement.innerHTML = `<strong>${userEmail}:</strong> ${messageText}`;
+                        chatBox.appendChild(msgElement);
+                    });
+
+                    chatBox.scrollTop = chatBox.scrollHeight;
+                })
+                .catch(error => {
+                    console.error("Error fetching messages:", error);
+                    document.getElementById("universal-chat-messages").innerHTML = "<p class='error-message'>Unable to load messages.</p>";
+                });
+        }
+
+        function startVoiceInput() {
+            const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+            recognition.lang = "en-US";
+            recognition.start();
+
+            recognition.onresult = function(event) {
+                const transcript = event.results[0][0].transcript;
+                document.getElementById("chat-input").value = transcript;
+            };
+
+            recognition.onerror = function(event) {
+                console.error("Speech recognition error", event.error);
+            };
+        }
+
+        window.onload = loadMessages;
+    </script>
+</body>
+</html>

@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Welcome | VidyAI++</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      color: #ffffff;
+      animation: fadeIn 1.5s ease;
+    }
+
+    header {
+      width: 100%;
+      padding: 20px 40px;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 1000;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 25px;
+      justify-content: center;
+    }
+
+    nav ul li a {
+      color: #e0e0e0;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+
+    nav ul li a:hover {
+      color: #fff;
+    }
+
+    .logo-wrapper {
+      margin-top: 100px;
+      padding-left: 40px;
+    }
+
+    .logo-wrapper img {
+      height: 60px;
+      width: 80px;
+      border-radius: 12px;
+    }
+
+    .container {
+      margin-top: 40px;
+      background: #ffffff10;
+      border-radius: 20px;
+      padding: 50px 40px;
+      text-align: center;
+      width: 90%;
+      max-width: 420px;
+      margin-left: auto;
+      margin-right: auto;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    h1 {
+      font-size: 2.3rem;
+      margin-bottom: 10px;
+    }
+
+    h3 {
+      font-size: 1rem;
+      margin-bottom: 25px;
+      color: #dcdcdc;
+      font-weight: 400;
+    }
+
+    p {
+      font-size: 1rem;
+      margin-bottom: 30px;
+      color: #e0e0e0;
+    }
+
+    .btn-group {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .btn-group a {
+      text-decoration: none;
+    }
+
+    .email-btn, .google-btn, .learn-btn {
+      padding: 12px;
+      font-size: 1rem;
+      font-weight: 600;
+      color: white;
+      border: none;
+      border-radius: 50px;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      width: 100%;
+    }
+
+    .email-btn {
+      background: linear-gradient(to right, #00c6ff, #0072ff);
+      box-shadow: 0 4px 15px rgba(0, 114, 255, 0.4);
+    }
+
+    .google-btn {
+      background: linear-gradient(to right, #ff5858, #f09819);
+      box-shadow: 0 4px 15px rgba(240, 152, 25, 0.4);
+    }
+
+    .learn-btn {
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+      border: 1px solid #fff;
+    }
+
+    .email-btn:hover, .google-btn:hover, .learn-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 6px 20px rgba(255, 255, 255, 0.2);
+    }
+
+    footer {
+      margin-top: 25px;
+      font-size: 0.8rem;
+      color: #ccc;
+      text-align: center;
+      padding-bottom: 20px;
+    }
+
+    @keyframes fadeIn {
+      0% {
+        opacity: 0;
+        transform: translateY(40px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 500px) {
+      header {
+        padding: 15px 20px;
+      }
+
+      nav ul {
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .container {
+        padding: 35px 25px;
+      }
+
+      h1 {
+        font-size: 1.9rem;
+      }
+
+      h3 {
+        font-size: 0.95rem;
+      }
+
+      .email-btn, .google-btn, .learn-btn {
+        font-size: 0.95rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <nav>
+      <ul>
+        <li><a href="#about">About Us</a></li>
+        <li><a href="#community">Community</a></li>
+        <li><a href="#support">Support</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Logo outside the header -->
+
+
+  <div class="container">
+    <h1>Welcome to VidyAI++</h1>
+    
+    <h3>Empowering learners with smart, secure authentication</h3>
+    <p>Join our AI-powered platform to access, explore, and excel — securely and smartly.</p>
+
+    <div class="btn-group">
+      <a href="/login"><button class="email-btn">👤 Log In</button></a>
+      <a href="/signup"><button class="email-btn">📝 Sign Up</button></a>
+    </div>
+
+    <footer>
+      &copy; 2025 VidyAI++. All rights reserved.
+    </footer>
+  </div>
+
+</body>
+</html>

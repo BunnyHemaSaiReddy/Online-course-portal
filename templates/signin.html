@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sign In Options</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+  
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/9.6.11/firebase-app-compat.js" defer></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.11/firebase-auth-compat.js" defer></script>
+</head>
+<body>
+  <div class="container">
+    <h2>Choose a Sign-In Method</h2>
+    
+    <!-- Google Sign-In -->
+    <button id="googleSignInBtn" class="google-btn">Sign In with Google</button>
+    <br><br>
+    
+    <!-- Email Sign-In -->
+    <a href="{{ url_for('login') }}"><button class="email-btn">Sign In with Email</button></a>
+    <br><br>
+    
+    <!-- Facebook Sign-In 
+       <button id="facebookSignInBtn" class="facebook-btn">Sign In with Facebook</button>
+    -->
+    <p id="error-msg" style="color: red; margin-top: 20px;"></p>
+  </div>
+  <script src="{{ url_for('static', filename='script.js') }}"></script>
+
+</body>
+</html>

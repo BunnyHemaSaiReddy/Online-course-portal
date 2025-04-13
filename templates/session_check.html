@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Checking Session...</title>
+</head>
+<body>
+  <p>Restoring session, please wait...</p>
+  <script>
+    const email = localStorage.getItem("userEmail");
+    if (email) {
+      fetch(`/set_session?email=${encodeURIComponent(email)}`)
+        .then(response => {
+          if (response.ok) {
+            window.location.href = "/index";  // Go back to index after session is restored
+          } else {
+            alert("Session could not be restored. Please log in.");
+            window.location.href = "/login";
+          }
+        })
+        .catch(error => {
+          console.error("Error:", error);
+          window.location.href = "/login";
+        });
+    } else {
+      // No email in localStorage
+      window.location.href = "/login";
+    }
+  </script>
+</body>
+</html>
